@@ -21,7 +21,10 @@ const themeCSS = {
 
 /* -------------------- Functions which affect the page -------------------- */
 /**
- * Fills in the text on the list button.
+ * Fills in the text on the list button and sets if it is disabled or not based on the length of an array supplied.
+ * 
+ * @param {Array} arr - The array containing the books to be displayed. It varies based on search terms
+ *                      and whether the page is freshly loaded.
  */
 const listButtonText = (arr) => {
     if (arr.length === 0){
@@ -40,6 +43,9 @@ const listButtonText = (arr) => {
 /**
  * Creates the load out of new books dependant on what page the user is on and
  * updates the button text.
+ * 
+ * @param {Array} arr - The array containing the books to be displayed. It varies based on search terms
+ *                      and whether the page is freshly loaded.
  */
 const createPage = (arr) => {
     const startPosition = (state.pageNumber - 1) * BOOKS_PER_PAGE
@@ -241,7 +247,6 @@ const handleItemClick = (event) => {
                 break;
             }
         }
-        //const id = event.srcElement.dataset.id;
     
         html.list.overlay.toggleAttribute('open')
         html.list.blur.setAttribute('src', `${state.loaded[idValue].image}`)
