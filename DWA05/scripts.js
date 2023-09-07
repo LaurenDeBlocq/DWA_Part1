@@ -11,15 +11,15 @@ form.addEventListener("submit", (event) => {
       result.innerText = "Division not performed. Both values are required in inputs. Try again";
     } else if(dividend < 0 || divider <= 0){
       result.innerText = "Division not performed. Invalid number provided. Try again";
-      throw new Error();
+      throw new Error("Invalid Number");
     } else if (isNaN(dividend) || isNaN(divider)){
       document.body.innerHTML = `
       <h1>Something critical went wrong. Please reload the page.</h1>`;
-      throw new Error();
+      throw new Error("Not a number");
     } else {
     result.innerText = Math.floor(dividend / divider);
     } 
   } catch (e) {
-    console.trace()
+    console.error(e)
   }
 });
