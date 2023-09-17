@@ -1,6 +1,6 @@
 import { state, BOOKS_PER_PAGE, authors, genres, books } from "./data.js";
 import { html, createPreviewHtml } from "./view.js";
-import { createPreview } from "./DWA08.js";
+import { detailedPreview } from "./DWA08.js";
 
 state.pageNumber = 1;
 state.theme = 'light'
@@ -253,7 +253,7 @@ const handleItemClick = (event) => {
         html.list.overlay.toggleAttribute('open')
         const {image, title, author, description, publish,} = state.loaded[idValue]
 
-        const preview = createPreview({image, title, author, description, publish,})
+        const preview = detailedPreview({image, title, author, description, publish,})
 
         preview.createPreviewHtml();
     } else {

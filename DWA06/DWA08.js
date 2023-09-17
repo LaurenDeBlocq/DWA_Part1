@@ -1,7 +1,7 @@
 import { html } from "./view.js";
 import { authors } from "./data.js";
 
-export const createPreview = ( {image, title, author, description, publish,}) => {
+export const detailedPreview = ( {image, title, author, description, publish,}) => {
    
     const previewDetails = {
         image: image,
