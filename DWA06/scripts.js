@@ -1,5 +1,6 @@
 import { state, BOOKS_PER_PAGE, authors, genres, books } from "./data.js";
 import { html, createPreviewHtml } from "./view.js";
+import { createPreview } from "./DWA08.js";
 
 state.pageNumber = 1;
 state.theme = 'light'
@@ -236,6 +237,7 @@ const handleSettingsSubmit = (event) => {
 const handleItemClick = (event) => {
     event.preventDefault()
     let idValue = null
+    
 
     if (['preview', 'preview__image', 'preview__info', 'preview__author', 'preview__title'].includes(event.srcElement.classList[0])){
         
@@ -247,13 +249,13 @@ const handleItemClick = (event) => {
                 break;
             }
         }
-    
+        
         html.list.overlay.toggleAttribute('open')
-        html.list.blur.setAttribute('src', `${state.loaded[idValue].image}`)
-        html.list.image.setAttribute('src', `${state.loaded[idValue].image}`)
-        html.list.title.innerText = `${state.loaded[idValue].title}`
-        html.list.subtitle.innerText = `${authors[state.loaded[idValue].author]} (${state.loaded[idValue].publish.getFullYear()})`
-        html.list.description.innerText = `${state.loaded[idValue].description}`
+        const {image, title, author, description, publish,} = state.loaded[idValue]
+
+        const preview = createPreview({image, title, author, description, publish,})
+
+        preview.createPreviewHtml();
     } else {
         html.list.overlay.removeAttribute('open')
     }
