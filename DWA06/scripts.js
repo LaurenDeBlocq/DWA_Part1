@@ -1,6 +1,7 @@
 import { state, BOOKS_PER_PAGE, authors, genres, books } from "./data.js";
-import { html, createPreviewHtml } from "./view.js";
+import { html } from "./view.js";
 import { detailedPreview } from "./DWA08.js";
+import { Preview } from "./DWA09.js"
 
 state.pageNumber = 1;
 state.theme = 'light'
@@ -55,11 +56,13 @@ const createPage = (arr) => {
     const fragment = document.createDocumentFragment()
     const extracted = arr.slice(startPosition, endPosition + 1)
 
+    console.log("beep");
+
     for (let i = 0; i < extracted.length; i++) {
         const { author, image, title, id, description, published } = extracted[i]
         const publish = new Date(published)
         state.loaded[id] = {id, image, author, title, description, publish}
-        const preview = createPreviewHtml(state.loaded[id])
+        const preview = new Preview(state.loaded[id])
         fragment.appendChild(preview)
     }
 
