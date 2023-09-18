@@ -92,7 +92,7 @@ export class Preview extends HTMLElement {
         this.inner = this.attachShadow({mode: "open"});
     
         const { author, id, title, image } = previewDetails
-        this.author = author
+        this.author = authors[author]
         this.id = id
         this.title = title
         this.image = image
@@ -103,18 +103,20 @@ export class Preview extends HTMLElement {
     }
     
     connectedCallback() {
-        this.elements = {
-            authorName: this.inner.querySelector('data-preview-author'),
-            imageSource: this.inner.querySelector('data-preview-image'),
-            bookTitle: this.inner.querySelector('data-preview-title'),
-            previewDiv: this.inner.querySelector('data-preview'),
-        }
-        //console.log(this.inner.authorName);
         
-//        this.elements.imageSource.setAttribute('src', this.image);
-        this.elements.authorName.innerHTML = `<span slot="author">${this.author}</span>` //`${authors[this.author]}`;
-        this.elements.bookTitle.textContent = `<span slot="title">${this.title}</span>`  //`${this.title}`;
-        this.elements.previewDiv.setAttribute('data-id', this.id)
+        const elements = {
+            authorName: this.inner.querySelector('[data-preview-author]'),
+            imageSource: this.inner.querySelector('[data-preview-image]'),
+            bookTitle: this.inner.querySelector('[data-preview-title]'),
+            previewDiv: this.inner.querySelector('[data-preview]'),
+        }
+
+        console.log(elements);
+        
+        elements.imageSource.setAttribute('src', this.image);
+        elements.authorName.innerHTML = `${this.author}` //`${authors[this.author]}`;
+        elements.bookTitle.textContent = `${this.title}`  //`${this.title}`;
+        elements.previewDiv.setAttribute('data-id', this.id)
 
         return this.inner
     }
