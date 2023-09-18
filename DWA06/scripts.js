@@ -238,21 +238,23 @@ const handleSettingsSubmit = (event) => {
 const handleItemClick = (event) => {
     event.preventDefault()
     let idValue = null
-    
+     console.log(event);
 
-    if (['preview', 'preview__image', 'preview__info', 'preview__author', 'preview__title'].includes(event.srcElement.classList[0])){
-        
-        const path = event.path || event.composedPath()
-        for (const element of path) {
-            const { id } = element.dataset
-            if (id) {
-                idValue = id
-                break;
-            }
-        }
+    if (event.srcElement.localName === "book-preview"){
+        console.log("beep");
+
+        const id = event.srcElement.id
+        // const path = event.path || event.composedPath()
+        // for (const element of path) {
+        //     const { id } = element.dataset
+        //     if (id) {
+        //         idValue = id
+        //         break;
+        //     }
+        // }
         
         html.list.overlay.toggleAttribute('open')
-        const {image, title, author, description, publish,} = state.loaded[idValue]
+        const {image, title, author, description, publish,} = state.loaded[id]
 
         const preview = detailedPreview({image, title, author, description, publish,})
 

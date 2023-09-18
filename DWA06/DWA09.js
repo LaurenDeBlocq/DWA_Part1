@@ -98,8 +98,7 @@ export class Preview extends HTMLElement {
         this.image = image
 
         const {content} = template;
-        this.inner.appendChild(content.cloneNode(true))
-        
+        this.inner.appendChild(content.cloneNode(true))        
     }
     
     connectedCallback() {
@@ -110,13 +109,11 @@ export class Preview extends HTMLElement {
             bookTitle: this.inner.querySelector('[data-preview-title]'),
             previewDiv: this.inner.querySelector('[data-preview]'),
         }
-
-        console.log(elements);
         
         elements.imageSource.setAttribute('src', this.image);
         elements.authorName.innerHTML = `${this.author}` //`${authors[this.author]}`;
         elements.bookTitle.textContent = `${this.title}`  //`${this.title}`;
-        elements.previewDiv.setAttribute('data-id', this.id)
+        elements.previewDiv.setAttribute('id', this.id)
 
         return this.inner
     }
