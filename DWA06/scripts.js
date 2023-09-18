@@ -56,8 +56,6 @@ const createPage = (arr) => {
     const fragment = document.createDocumentFragment()
     const extracted = arr.slice(startPosition, endPosition + 1)
 
-    console.log("beep");
-
     for (let i = 0; i < extracted.length; i++) {
         const { author, image, title, id, description, published } = extracted[i]
         const publish = new Date(published)

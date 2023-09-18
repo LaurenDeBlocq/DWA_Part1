@@ -1,8 +1,9 @@
 import { authors } from "./data.js";
 
 const template = document.createElement("template")
-template.className = "preview"
-template.dataset.id = ''
+// template.className = "preview"
+// template.dataset.id = ''
+
 template.innerHTML = 
 /* html */  `
     <style>
@@ -67,21 +68,29 @@ template.innerHTML =
       }
     </style>
 
-    <img class="preview__image" data-preview-image src=""/>
-        
-    <div class="preview__info">
-        <div class="preview__title" data-preview-title></div>
-        
-        <div class="preview__author" data-preview-author></div>
+    <div class="preview" data-preview data-id="">
+        <img class="preview__image" data-preview-image src="">
+            
+        <div class="preview__info">
+            <div class="preview__title" data-preview-title><slot name="title"></slot></div>
+            
+            <div class="preview__author" data-preview-author><slot name="author"></slot></div>
+        </div>
     </div>
 `
 
-
 export class Preview extends HTMLElement {
-    inner = this.attachShadow({mode: "open"});
-    
+    elements = {
+        authorName: undefined,
+        imageSource: undefined,
+        bookTitle: undefined,
+        previewDiv: undefined,
+    }
+
     constructor(previewDetails){
         super()
+        this.inner = this.attachShadow({mode: "open"});
+    
         const { author, id, title, image } = previewDetails
         this.author = author
         this.id = id
@@ -90,20 +99,22 @@ export class Preview extends HTMLElement {
 
         const {content} = template;
         this.inner.appendChild(content.cloneNode(true))
+        
     }
     
     connectedCallback() {
         this.elements = {
-            authorName: this.inner.querySelector("data-preview-author"),
-            imageSource: this.inner.querySelector("data-preview-image"),
-            bookTitle: this.inner.querySelector("data-preview-title"),
+            authorName: this.inner.querySelector('data-preview-author'),
+            imageSource: this.inner.querySelector('data-preview-image'),
+            bookTitle: this.inner.querySelector('data-preview-title'),
+            previewDiv: this.inner.querySelector('data-preview'),
         }
-
-        console.log(this.elements.authorName);
-        this.elements.authorName.innerHTML = `${authors[this.author]}`;
-        this.elements.imageSource.setAttribute('src', this.image);
-        this.elements.bookTitle.textContent = `${this.title}`;
-        this.inner.dataset.id = this.id
+        //console.log(this.inner.authorName);
+        
+//        this.elements.imageSource.setAttribute('src', this.image);
+        this.elements.authorName.innerHTML = `<span slot="author">${this.author}</span>` //`${authors[this.author]}`;
+        this.elements.bookTitle.textContent = `<span slot="title">${this.title}</span>`  //`${this.title}`;
+        this.elements.previewDiv.setAttribute('data-id', this.id)
 
         return this.inner
     }
